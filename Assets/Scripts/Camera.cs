@@ -26,6 +26,12 @@ public class Camera : MonoBehaviour
         float posY = Mathf.SmoothDamp(transform.position.y, target.position.y, ref velocity.y, smoothTime.y);
 
         transform.position = new Vector3(posX, posY, transform.position.z);
+
+        transform.position = new Vector3(
+            Mathf.Clamp (transform.position.x, minLimit.x, maxLimit.x),
+            Mathf.Clamp (transform.position.y, minLimit.y, maxLimit.y),
+            transform.position.z);
+
       }
     }
 }
