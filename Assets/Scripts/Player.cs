@@ -14,7 +14,8 @@ public class Player : MonoBehaviour
 
   public bool grounded;
   private bool jumping;
-  private bool facingRight;
+  private bool facingRight = true;
+  private bool isAlive = true;
 
   private Rigidbody2D rb2D;
   private Animator anim;
@@ -42,9 +43,9 @@ public class Player : MonoBehaviour
 
     void FixedUpdate(){
 
-      float move = 0f;
+    if(isAlive){
 
-      move = Input.GetAxis("Horizontal");
+      float move = Input.GetAxis("Horizontal");
 
       rb2D.velocity = new Vector2(move * speed, rb2D.velocity.y);
 
@@ -56,11 +57,15 @@ public class Player : MonoBehaviour
           rb2D.AddForce(new Vector2 (0f, jumpForce));
           jumping = false;
         }
+    }else{
+    	rb2D.velocity = new Vector2(0, rb2D.velocity.y);
+    }
     }
 
     void PlayAnimations(){
-
-      if (grounded && rb2D.velocity.x != 0) {
+      if(!isAlive){
+      	anim.Play("Die");
+      }else if (grounded && rb2D.velocity.x != 0) {
         anim.Play("Run");
       }else if(grounded && rb2D.velocity.x == 0){
         anim.Play("Idle");
@@ -72,5 +77,16 @@ public class Player : MonoBehaviour
     void Flip(){
       facingRight = !facingRight;
       transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+    }
+
+    void OnCollisionEnter2D(Collision2D other){
+    	if(other.gameObject.CompareTag("Enemy")){
+    		PlayerDie();
+    	}
+    }
+
+    void PlayerDie(){
+    	isAlive = false;
+    	Physics2D.IgnoreLayerCollision(9, 10);
     }
 }
