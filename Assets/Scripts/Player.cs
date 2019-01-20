@@ -114,4 +114,8 @@ public class Player : MonoBehaviour
           GameManager.instance.SetOverlay(GameManager.GameStatus.DIE);
       }
     }
+
+    void CelebrateAnimationFinished(){
+    	GameManager.instance.SetOverlay(GameManager.GameStatus.WIN);
+    }
 }
