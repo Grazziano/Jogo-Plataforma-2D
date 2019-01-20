@@ -35,6 +35,7 @@ public class GameManager : MonoBehaviour
     	score = 0;
     	status = GameStatus.PLAY;
     	overlay.enabled = false;
+    	Physics2D.IgnoreLayerCollision(9, 10, false);
     }
 
     // Update is called once per frame
@@ -49,12 +50,14 @@ public class GameManager : MonoBehaviour
     			timeHud.text = "Time: " + timeInt.ToString();
     			scoreHud.text = "Score: " + score.ToString();
     		}
-    	}else if(status == GameStatus.WIN){
+    	}else if(Input.GetButtonDown("Jump")){
+    		if(status == GameStatus.WIN){
     			// exibir os overlays na tela
-    		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    	} else{
-    		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    	}   
+    		    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    		} else{
+    	    	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    	    }   
+        }
     }
 
     public void SetOverlay(GameStatus parStatus){
