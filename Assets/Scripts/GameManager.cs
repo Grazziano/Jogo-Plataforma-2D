@@ -52,8 +52,12 @@ public class GameManager : MonoBehaviour
     		}
     	}else if(Input.GetButtonDown("Jump")){
     		if(status == GameStatus.WIN){
-    			// exibir os overlays na tela
-    		    SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    			if(SceneManager.GetActiveScene().buildIndex == 0){
+    				// exibir os overlays na tela
+    		    	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    		    }else{
+    		    	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    		    }
     		} else{
     	    	SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     	    }   
