@@ -22,6 +22,10 @@ public class Player : MonoBehaviour
   private Rigidbody2D rb2D;
   private Animator anim;
 
+  public AudioClip fxWin;
+  public AudioClip fxDie;
+  public AudioClip fxJump;
+
 
     // Start is called before the first frame update
     void Start()
@@ -33,19 +37,24 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        grounded = Physics2D.OverlapCircle(groundCheck.position, radiusCheck, layerGround);
+    	
+	        grounded = Physics2D.OverlapCircle(groundCheck.position, radiusCheck, layerGround);
 
-        if (Input.GetButtonDown("Jump") && grounded == true){
-          //Comandos de pulo
-          jumping = true;
-        }
+	        if (Input.GetButtonDown("Jump") && grounded == true){
+	          //Comandos de pulo
+	          jumping = true;
+	          if(isAlive && !levelCompleted){
+	          	SoundManager.instance.PlayFxPlayer(fxJump);
+	          }
+	        }
 
-        if((int)GameManager.instance.time <= 0 && !timeIsOver){
-          timeIsOver = true;
-          PlayerDie();
-        }
+	        if((int)GameManager.instance.time <= 0 && !timeIsOver){
+	          timeIsOver = true;
+	          PlayerDie();
+	        }
 
         PlayAnimations();
+    	
     }
 
     void FixedUpdate(){
@@ -97,11 +106,14 @@ public class Player : MonoBehaviour
     void PlayerDie(){
     	isAlive = false;
     	Physics2D.IgnoreLayerCollision(9, 10);
+    	SoundManager.instance.PlayFxPlayer(fxDie);
     }
 
     void OnTriggerEnter2D(Collider2D other){
     	if(other.CompareTag("Exit")){
     		levelCompleted = true;
+
+    		SoundManager.instance.PlayFxPlayer(fxWin);
     	}
     }
 

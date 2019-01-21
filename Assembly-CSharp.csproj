@@ -60,6 +60,7 @@
      <Compile Include="Assets\Scripts\GemCollect.cs" />
      <Compile Include="Assets\Scripts\Parallax.cs" />
      <Compile Include="Assets\Scripts\Player.cs" />
+     <Compile Include="Assets\Scripts\SoundManager.cs" />
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/grazz/Documents/PlatformGame/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
